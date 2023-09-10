@@ -144,7 +144,7 @@ class AllProductsSection extends Component {
               alt="no products"
               className="failure-img"
             />
-            <p className="failure-p1">No Products Found</p>
+            <h1 className="failure-p1">No Products Found</h1>
             <p className="failure-p1">
               We could not find any products. Try other filters.
             </p>
@@ -196,7 +196,7 @@ class AllProductsSection extends Component {
         alt="products failure"
         className="failure-img"
       />
-      <p className="failure-p1">Oops! Something Went Wrong</p>
+      <h1 className="failure-p1">Oops! Something Went Wrong</h1>
       <p className="failure-p1">
         We are having some trouble processing your request. Please try again.
       </p>
