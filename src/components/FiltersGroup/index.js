@@ -20,8 +20,9 @@ const FiltersGroup = props => {
   }
 
   const onSubmittedSearch = event => {
-    event.preventDefault()
-    onSubmitSearch()
+    if (event.key === 'Enter') {
+      onSubmitSearch()
+    }
   }
 
   const GetCategoryEl = categoryDetails => {
@@ -70,18 +71,17 @@ const FiltersGroup = props => {
 
   return (
     <div className="filters-group-container">
-      <form onSubmit={onSubmittedSearch}>
-        <div className="filters-group-search">
-          <input
-            type="search"
-            value={titleSearch}
-            placeholder="Search"
-            className="filters-group-search-el"
-            onChange={onChangedSearch}
-          />
-          <BsSearch className="filters-group-search-icon" />
-        </div>
-      </form>
+      <div className="filters-group-search">
+        <input
+          type="search"
+          value={titleSearch}
+          placeholder="Search"
+          className="filters-group-search-el"
+          onChange={onChangedSearch}
+          onKeyDown={onSubmittedSearch}
+        />
+        <BsSearch className="filters-group-search-icon" />
+      </div>
 
       <h1 className="filters-group-heading">Category</h1>
       <ul className="filters-group-categories-container">

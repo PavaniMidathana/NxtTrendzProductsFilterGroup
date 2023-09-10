@@ -209,7 +209,6 @@ class AllProductsSection extends Component {
   onClickClearBtn = () => {
     this.setState(
       {
-        activeOptionId: sortbyOptions[0].optionId,
         titleSearch: '',
         category: '',
         rating: '',
