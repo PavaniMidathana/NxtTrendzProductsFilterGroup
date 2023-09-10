@@ -34,10 +34,12 @@ const FiltersGroup = props => {
     }
 
     return (
-      <li className="filters-group-categories-li-el">
+      <li
+        className="filters-group-categories-li-el"
+        onClick={onChangedCategory}
+      >
         <p
           className={`filters-group-categories-li-btn ${getActiveCategoryCSS}`}
-          onClick={onChangedCategory}
         >
           {name}
         </p>

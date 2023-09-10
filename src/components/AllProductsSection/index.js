@@ -69,7 +69,6 @@ const apiStatusConstants = {
   initial: 'INITIAL',
   success: 'SUCCESS',
   failure: 'FAILURE',
-  noProducts: 'NOPRODUCTS',
   loading: 'LOADING',
 }
 
@@ -116,19 +115,14 @@ class AllProductsSection extends Component {
         rating: product.rating,
       }))
 
-      if (updatedData.length === 0) {
-        this.setState({
-          productsList: updatedData,
-          apiStatus: apiStatusConstants.noProducts,
-        })
-      } else {
-        this.setState({
-          productsList: updatedData,
-          apiStatus: apiStatusConstants.success,
-        })
-      }
+      this.setState({
+        productsList: updatedData,
+        apiStatus: apiStatusConstants.success,
+      })
     } else {
-      this.setState({apiStatus: apiStatusConstants.failure})
+      this.setState({
+        apiStatus: apiStatusConstants.failure,
+      })
     }
   }
 
@@ -138,21 +132,38 @@ class AllProductsSection extends Component {
 
   renderProductsList = () => {
     const {productsList, activeOptionId} = this.state
+    const productsListLength = productsList.length <= 0
 
     // TODO: Add No Products View
     return (
-      <div className="all-products-container">
-        <ProductsHeader
-          activeOptionId={activeOptionId}
-          sortbyOptions={sortbyOptions}
-          changeSortby={this.changeSortby}
-        />
-        <ul className="products-list">
-          {productsList.map(product => (
-            <ProductCard productData={product} key={product.id} />
-          ))}
-        </ul>
-      </div>
+      <>
+        {productsListLength ? (
+          <div className="failure-container">
+            <img
+              src="https://assets.ccbp.in/frontend/react-js/nxt-trendz/nxt-trendz-no-products-view.png"
+              alt="no products"
+              className="failure-img"
+            />
+            <p className="failure-p1">No Products Found</p>
+            <p className="failure-p1">
+              We could not find any products. Try other filters.
+            </p>
+          </div>
+        ) : (
+          <div className="all-products-container">
+            <ProductsHeader
+              activeOptionId={activeOptionId}
+              sortbyOptions={sortbyOptions}
+              changeSortby={this.changeSortby}
+            />
+            <ul className="products-list">
+              {productsList.map(product => (
+                <ProductCard productData={product} key={product.id} />
+              ))}
+            </ul>
+          </div>
+        )}
+      </>
     )
   }
 
@@ -192,20 +203,6 @@ class AllProductsSection extends Component {
     </div>
   )
 
-  renderNoProductsView = () => (
-    <div className="failure-container">
-      <img
-        src="https://assets.ccbp.in/frontend/react-js/nxt-trendz/nxt-trendz-no-products-view.png"
-        alt="no products"
-        className="failure-img"
-      />
-      <p className="failure-p1">No Products Found</p>
-      <p className="failure-p1">
-        We could not find any products. Try other filters.
-      </p>
-    </div>
-  )
-
   onClickClearBtn = () => {
     this.setState(
       {
@@ -224,8 +221,6 @@ class AllProductsSection extends Component {
         return this.renderProductsList()
       case apiStatusConstants.failure:
         return this.renderFailureView()
-      case apiStatusConstants.noProducts:
-        return this.renderNoProductsView()
       case apiStatusConstants.loading:
         return this.renderLoader()
       default:
